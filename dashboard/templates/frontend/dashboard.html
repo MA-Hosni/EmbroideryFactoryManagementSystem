@@ -1,0 +1,210 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+<title>dashboard</title>
+<link rel="stylesheet" href="{%static 'css/dashboard.css'%}">
+{% endblock head %}
+
+{% block body %}
+  <section class="sidebar">
+    <div class="menu-btn">
+      <i class="fa-solid fa-angle-left"></i>
+    </div>
+    <div class="head">
+      <div class="user-img">
+        <img src="{% static 'images/logo.png' %}" alt="">
+      </div>
+    </div>
+    <div class="nav">
+      <div class="menu">
+        <p class="title">Main</p>
+        <ul>
+          <li class="active">
+            <a href="{% url 'dashboard' %}">
+              <i class="fa-solid fa-chart-pie"></i>
+              <span class="text">Dashboard</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="fa-solid fa-users"></i>
+              <span class="text">Users</span>
+              <i id="arrow" class="fa-solid fa-chevron-down"></i>
+            </a>
+            <ul class="sub-menu">
+              <li>
+                <a href="{% url 'employees' %}">
+                  <span class="text">Employees</span>
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'adherent' %}">
+                  <span class="text">Adherents</span>
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'interns' %}">
+                  <span class="text">Interns</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="{% url 'follownotification' %}">
+              <i class="fa-solid fa-bell"></i>
+              <span class="text">Notifications</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="fa-regular fa-clipboard"></i>
+              <span class="text">Complaint</span>
+              <i id="arrow" class="fa-solid fa-chevron-down"></i>
+            </a>
+            <ul class="sub-menu">
+              <li>
+                <a href="{% url 'submitcomplaint' %}">
+                  <span class="text">Create Complaint</span>
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'followcomplaint' %}">
+                  <span class="text">My Complaints</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="#">
+              <i class="fa-solid fa-calendar-days"></i>
+              <span class="text">Permission</span>
+              <i id="arrow" class="fa-solid fa-chevron-down"></i>
+            </a>
+            <ul class="sub-menu">
+              <li>
+                <a href="{% url 'submitcounji' %}">
+                  <span class="text">Request a Leave</span>
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'followcounji' %}">
+                  <span class="text">My Requests</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="menu">
+      <p class="title">account</p>
+      <ul>
+        <li>
+          <a href="{% url 'profile' %}">
+            <i class="fa-solid fa-circle-user"></i>
+            <span class="text">Profile</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'logout' %}" style="text-decoration: none;">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span class="text">logout</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+  <main>
+    <div class="tit">
+      <h3>Dashboard > Statistics</h3>
+    </div>
+    <section class="firlin">
+      <section class="chiffres">
+        <div class="carre">
+          <div class="star">
+            <h5>Total Employees</h5>
+            <i class="fa-solid fa-address-card"></i>
+          </div>
+          <div class="starr">
+            <h3>57</h3>
+          </div>
+          <div class="starrr">
+            <i>+3.5%</i>
+            <p>Since last month</p>
+          </div>
+        </div>
+        <div class="carre">
+          <div class="star">
+            <h5>Total Customers</h5>
+            <i class="fa-solid fa-users-rectangle"></i>
+          </div>
+          <div class="starr">
+            <h3>8912</h3>
+          </div>
+          <div class="starrr">
+            <i>+0.13%</i>
+            <p>Since last month</p>
+          </div>
+        </div>
+        <div class="carre">
+          <div class="star">
+            <h5>Monthly Sales</h5>
+            <i class="fa-solid fa-wallet"></i>
+          </div>
+          <div class="starr">
+            <h3>17.8K</h3>
+          </div>
+          <div class="starrr">
+            <i>+5%</i>
+            <p>Since last month</p>
+          </div>
+        </div>
+        <div class="carre">
+          <div class="star">
+            <h5>Yearly Sales</h5>
+            <i class="fa-solid fa-sack-dollar"></i>
+          </div>
+          <div class="starr">
+            <h3>2.48M</h3>
+          </div>
+          <div class="starrr">
+            <i>+1.04%</i>
+            <p>Since last year</p>
+          </div>
+        </div>
+      </section>
+      <div class="graph">
+        <h5 class="char-title">Adherents Per Month</h5>
+        <div id="spline-area-chart"></div>
+      </div>
+    </section>
+    <section class="seclin">
+      <div class="clothing-brands">
+        <h5 class="char-title">Embroidery Partnerships: Brands We Work With</h5>
+        <div id="basic-barchar"></div>
+      </div>
+      <div class="employees">
+        <h5 class="char-title">Employees Per Department</h5>
+        <div id="donut-char"></div>
+      </div>
+    </section>
+    <section class="thirlin">
+      <div class="reclamation">
+        <div id="reclamation-chart"></div>
+      </div>
+      <div class="conge">
+        <div id="conge-chart"></div>
+      </div>
+    </section>
+
+    
+  </main>
+
+  
+  {% endblock body %}
+
+
+  {% block js %}
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  <script src="{%static 'js/dashboard.js'%}"></script>
+  {% endblock js %}

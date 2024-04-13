@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+<title>adherent</title>
+<link rel="stylesheet" href="{% static 'css/conji1.css' %}">
+{% endblock head %}
+{% block body %}
+<section class="sidebar">
+  <div class="menu-btn">
+    <i class="fa-solid fa-angle-left"></i>
+  </div>
+  <div class="head">
+    <div class="user-img">
+      <img src="{% static 'images/logo.png' %}" alt="">
+    </div>
+  </div>
+  <div class="nav">
+    <div class="menu">
+      <p class="title">Main</p>
+      <ul>
+        <!-- <li>
+          <a href="{% url 'dashboard' %}">
+            <i class="fa-solid fa-chart-pie"></i>
+            <span class="text">Dashboard</span>
+          </a>
+        </li> -->
+        <li>
+          <a href="#">
+            <i class="fa-solid fa-users"></i>
+            <span class="text">Users</span>
+            <i id="arrow" class="fa-solid fa-chevron-down"></i>
+          </a>
+          <ul class="sub-menu">
+            <!-- <li>
+              <a href="{% url 'employees' %}">
+                <span class="text">Employees</span>
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'adherent' %}">
+                <span class="text">Adherents</span>
+              </a>
+            </li> -->
+            <li>
+              <a href="{% url 'interns' %}">
+                <span class="text">Interns</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="{% url 'follownotification' %}">
+            <i class="fa-solid fa-bell"></i>
+            <span class="text">Notifications</span>
+          </a>
+        </li>
+        <!-- <li>
+          <a href="#">
+            <i class="fa-regular fa-clipboard"></i>
+            <span class="text">Complaint</span>
+            <i id="arrow" class="fa-solid fa-chevron-down"></i>
+          </a>
+          <ul class="sub-menu">
+            <li>
+              <a href="{% url 'submitcomplaint' %}">
+                <span class="text">Create Complaint</span>
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'followcomplaint' %}">
+                <span class="text">My Complaints</span>
+              </a>
+            </li>
+          </ul>
+        </li> -->
+        <li>
+          <a href="#">
+            <i class="fa-solid fa-calendar-days"></i>
+            <span class="text">Permission</span>
+            <i id="arrow" class="fa-solid fa-chevron-down"></i>
+          </a>
+          <ul class="sub-menu">
+            <li class="active">
+              <a href="{% url 'submitcounji' %}">
+                <span class="text">Request a Leave</span>
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'followcounji' %}">
+                <span class="text">My Requests</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="menu">
+    <p class="title">account</p>
+    <ul>
+      <li>
+        <a href="{% url 'profile' %}">
+          <i class="fa-solid fa-circle-user"></i>
+          <span class="text">Profile</span>
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'logout' %}" style="text-decoration: none;">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span class="text">logout</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</section>
+  <main>
+    <div class="tit">
+      <h3>Permission > Leave Request</h3>
+    </div>
+    <div class="bod">
+      <h2>Create a new request ...</h2>
+      <form method="POST">
+        {% csrf_token %}
+        <div class="profile">
+          <div class="star-lowel">
+            <fieldset>
+              <legend>Start Date</legend>
+              {{ form.start_date }}
+            </fieldset>
+            <fieldset>
+              <legend>End Date</legend>
+              {{ form.end_date }}
+            </fieldset>
+            <fieldset>
+              <legend>Resumption of Leave</legend>
+              {{ form.resumption_date }}
+            </fieldset>
+          </div>
+          <div class="star-theni">
+            <fieldset>
+              <legend>Full name</legend>
+              <input type="text" name="full name" required>
+            </fieldset>
+            <fieldset>
+              <legend>Matricule</legend>
+              <input type="number" name="matricule" required min="0000" max="9999">
+            </fieldset>
+          </div>
+          <fieldset>
+            <legend>Leave Type</legend>
+            {{ form.leave_type }}
+          </fieldset>
+          <fieldset>
+            <legend>Reason for Leave</legend>
+            {{ form.reason_for_leave }}
+          </fieldset>
+        
+          <button id="Save" type="submit">
+            <span>Submit Request</span>
+          </button>
+        </div>
+      </form>
+    </div>
+    
+  </main>
+  {% endblock body %}

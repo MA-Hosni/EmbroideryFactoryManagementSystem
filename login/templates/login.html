@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="{% static 'css/login.css' %}">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
+</head>
+<body style="background-image: url('{% static 'images/patterns.png' %}'); background-repeat: no-repeat;">
+  <header>
+    <h1 class="header-1">Welcome Back !</h1>
+  </header>
+  <div class="wrapper animate__animated animate__bounceIn">
+    <img src="{% static 'images/logo2.png' %}">
+    <form method="POST" action="">
+      {% csrf_token %}
+      <div class="input-box">
+        <input type="text" name="username" placeholder="Username" required>
+        <i class='bx bxs-user'></i>
+      </div>
+      <div class="input-box">
+        <input type="password" name="password" placeholder="Password" required>
+        <i class='bx bxs-lock-alt' style="cursor: pointer;"></i>
+      </div>
+
+      <div class="remember-forgot">
+        <label><input type="checkbox"> Remember me</label>
+        <a href="{% url 'reset_password' %}">Forgot password?</a>
+      </div>
+
+      <button>
+        <span class="button_top">Login</span>
+      </button>
+
+      {% for message in messages %}
+        <p id="messages" style="text-align: center; color: red;">{{message}}</p>
+      {% endfor %}
+    </form>
+  </div>
+  <script>
+    const inputBoxes = document.querySelectorAll(".input-box");
+
+    const secondInputBox = inputBoxes[1];
+
+    let passIcon = secondInputBox.querySelector("i");
+    let inputType = secondInputBox.querySelector("input");
+    let test = true;
+    passIcon.addEventListener("click", () => {
+      if (test) {
+        inputType.type = 'text';
+        passIcon.className = 'bx bxs-lock-open-alt';
+        test = !test;
+      } else {
+        inputType.type = 'password';
+        passIcon.className = 'bx bxs-lock-alt';
+        test = !test;
+      }
+    })
+  </script>
+</body>
+</html>

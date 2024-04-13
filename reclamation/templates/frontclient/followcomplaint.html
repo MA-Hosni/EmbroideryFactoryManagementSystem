@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+<title>adherent</title>
+<link rel="stylesheet" href="{% static 'css/complaintfollowup.css' %}">
+{% endblock head %}
+{% block body %}
+  <section class="sidebar">
+    <div class="menu-btn">
+      <i class="fa-solid fa-angle-left"></i>
+    </div>
+    <div class="head">
+      <div class="user-img">
+        <img src="{% static 'images/logo.png' %}" alt="">
+      </div>
+    </div>
+    <div class="nav">
+      <div class="menu">
+        <p class="title">Main</p>
+        <ul>
+          <li>
+            <a href="{% url 'follownotification' %}">
+              <i class="fa-solid fa-bell"></i>
+              <span class="text">Notifications</span>
+            </a>
+          </li>
+          <li class="active">
+            <a href="#">
+              <i class="fa-regular fa-clipboard"></i>
+              <span class="text">Complaint</span>
+              <i id="arrow" class="fa-solid fa-chevron-down"></i>
+            </a>
+            <ul class="sub-menu">
+              <li>
+                <a href="{% url 'submitcomplaint' %}">
+                  <span class="text">Create Complaint</span>
+                </a>
+              </li>
+              <li class="active">
+                <a href="{% url 'followcomplaint' %}">
+                  <span class="text">My Complaints</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="menu">
+      <p class="title">account</p>
+      <ul>
+        <li>
+          <a href="{% url 'profile' %}">
+            <i class="fa-solid fa-circle-user"></i>
+            <span class="text">Profile</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'logout' %}" style="text-decoration: none;">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span class="text">logout</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+  <main>
+    <div class="tit">
+      <h3>Complaint > Follow complaint</h3>
+    </div>
+    <div style="display: flex; flex-direction: column;">
+      {% if complaints %}
+      <table id="myTable">
+        <thead>
+          <tr id="check-th">
+            <th>ID</th>
+            <th>Type of Complaint</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for complaint in complaints reversed %}
+          <tr>
+            <td>#{{ complaint.id }}</td>
+            <td>{{ complaint.complaint_type }}</td>
+            <td>{{ complaint.submitted_at }}</td>
+            <td>
+              {% if complaint.status == 'pending' %}
+              <span style="background-color: rgb(255, 255, 84); padding: 10px; border-radius: 15px; font-weight: 700;">pending<i class="fa-solid fa-spinner" style="margin-left:5px;"></i></span>
+              {% elif complaint.status == 'accepted' %}
+              <span style="background-color: rgb(36, 207, 36); padding: 10px; border-radius: 15px; font-weight: 700;">accepted<i class="fa-regular fa-circle-check" style="margin-left:5px;"></i></span>
+              {% else %}
+              <span style="background-color: rgb(255, 0, 0); padding: 10px; border-radius: 15px; font-weight: 700;">rejected<i class="fa-regular fa-circle-xmark" style="margin-left:5px;"></i></span>
+              {% endif %}
+            </td>
+            <td>
+              <button onclick="showModal('{{ complaint.complaint_text }}', '{{complaint.status}}')">
+                <span class="button_top"><i class="fa-solid fa-eye"></i></span>
+              </button>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <div id="myModal" class="modal">
+        <div class="card">
+          <div class="content">
+            <span class="title">complaint content</span>
+            <div class="desc">
+              <textarea name="content" id="content" readonly>
+                
+              </textarea>
+            </div>
+            <p id="pend" style="color: white;">This complaint is pending and no response is available yet.</p>
+            <div class="ijeba" style="display: none;">
+              <span class="title" style="margin-bottom: 0.5rem;">Respond message</span>
+              <span class="title" style="margin-bottom: 0;">
+                <i class="fa-solid fa-calendar-day" style="padding-right: 5px;"></i>date: 
+              </span>
+              <span class="title">
+                <i class="fa-regular fa-clock" style="padding-right: 5px;"></i>time: 
+              </span>
+              <div class="desc">
+                <textarea name="reponse" id="reponse" readonly>Lorem ipsum dolor sit amet consectetur adipisicing elit.</textarea>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="close">
+            <svg aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- The modal -->
+      {% else %}
+      <div class="info">
+        <div class="info__icon">
+          <svg
+            fill="none"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="m12 1.5c-5.79844 0-10.5 4.70156-10.5 10.5 0 5.7984 4.70156 10.5 10.5 10.5 5.7984 0 10.5-4.7016 10.5-10.5 0-5.79844-4.7016-10.5-10.5-10.5zm.75 15.5625c0 .1031-.0844.1875-.1875.1875h-1.125c-.1031 0-.1875-.0844-.1875-.1875v-6.375c0-.1031.0844-.1875.1875-.1875h1.125c.1031 0 .1875.0844.1875.1875zm-.75-8.0625c-.2944-.00601-.5747-.12718-.7808-.3375-.206-.21032-.3215-.49305-.3215-.7875s.1155-.57718.3215-.7875c.2061-.21032.4864-.33149.7808-.3375.2944.00601.5747.12718.7808.3375.206.21032.3215.49305.3215.7875s-.1155.57718-.3215.7875c-.2061.21032-.4864.33149-.7808.3375z"
+              fill="#393a37"
+            ></path>
+          </svg>
+        </div>
+        <div class="info__title">No Complaints Record</div>
+      </div>
+      {% endif %}
+    </div>
+
+    
+  </main>
+  {% endblock body %}
+
+  {% block js %}
+  <script src="{%static 'js/followcomplaint.js'%}"></script>
+  {% endblock js %}

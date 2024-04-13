@@ -1,0 +1,114 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;600&display=swap');
+
+* {
+  box-sizing: border-box;
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+body {
+  background: url('patterns.png') no-repeat;
+  background-size: cover; 
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(41, 116, 255, 0.477);
+  z-index: -1;
+}
+nav {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 30px;
+  background-color: rgb(138, 208, 255);
+  display: flex;
+  align-items: center;
+}
+nav a {
+  font-size: 12px;
+  padding-left: 60px;
+  color: black;
+  text-decoration: none;
+  font-weight: 600;
+}
+header {
+  position: absolute;
+  top: 40px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 0 20px;
+}
+#logo {
+  width: 240px;
+  margin: 15px;
+  border-radius: 20px;
+  filter: drop-shadow(12px 12px 7px rgba(255, 255, 255, 0.7));
+}
+.language-buttons {
+  display: flex;
+  gap: 5px;
+}
+header button , .employee-button, .client-button {
+  /* Variables */
+  --button_radius: 0.75em;
+  --button_color: #e8e8e8;
+  --button_outline_color: #000000;
+  font-size: 10px;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--button_radius);
+  background: var(--button_outline_color);
+  cursor: pointer;
+}
+.content button {
+  font-size: 15px;
+  margin: 10px;
+}
+.content button span {
+  padding-left: 80px;
+  padding-right: 80px;
+}
+.button_top {
+  display: block;
+  box-sizing: border-box;
+  border: 2px solid var(--button_outline_color);
+  border-radius: var(--button_radius);
+  padding: 0.75em 1.5em;
+  background: var(--button_color);
+  color: var(--button_outline_color);
+  transform: translateY(-0.2em);
+  transition: transform 0.1s ease;
+}
+button:hover .button_top {
+  transform: translateY(-0.33em);
+}
+button:active .button_top {
+  transform: translateY(0);
+}
+.content {
+  width: 40%;
+  text-align: center;
+  padding: 50px;
+  color: rgba(255, 255, 255);
+}
+#main-title {
+  font-size: 55px;
+  letter-spacing: 1px;
+  margin: 10px;
+}
+#main-paragraph {
+  letter-spacing: 1px;
+  margin-bottom: 25px;
+}

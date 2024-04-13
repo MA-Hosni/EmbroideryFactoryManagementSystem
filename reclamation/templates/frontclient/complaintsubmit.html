@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+  <title>adherent</title>
+  <link rel="stylesheet" href="{% static 'css/complaint1.css' %}">
+{% endblock head %}
+{% block body %}
+  <section class="sidebar">
+    <div class="menu-btn">
+      <i class="fa-solid fa-angle-left"></i>
+    </div>
+    <div class="head">
+      <div class="user-img">
+        <img src="{% static 'images/logo.png' %}" alt="">
+      </div>
+    </div>
+    <div class="nav">
+      <div class="menu">
+        <p class="title">Main</p>
+        <ul>
+          <li>
+            <a href="{% url 'follownotification' %}">
+              <i class="fa-solid fa-bell"></i>
+              <span class="text">Notifications</span>
+            </a>
+          </li>
+          <li class="active">
+            <a href="#">
+              <i class="fa-regular fa-clipboard"></i>
+              <span class="text">Complaint</span>
+              <i id="arrow" class="fa-solid fa-chevron-down"></i>
+            </a>
+            <ul class="sub-menu">
+              <li class="active">
+                <a href="{% url 'submitcomplaint' %}">
+                  <span class="text">Create Complaint</span>
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'followcomplaint' %}">
+                  <span class="text">My Complaints</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="menu">
+      <p class="title">account</p>
+      <ul>
+        <li>
+          <a href="{% url 'profile' %}">
+            <i class="fa-solid fa-circle-user"></i>
+            <span class="text">Profile</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'logout' %}" style="text-decoration: none;">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span class="text">logout</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+  <main>
+    <div class="tit">
+      <h3>Complaint > Create a Complaint</h3>
+    </div>
+    <div class="bod">
+      <h2>Add Complaint Here</h2>
+      <form method="POST">
+        {% csrf_token %}
+        <div class="profile">
+          <fieldset>
+            <legend>Type of complaint</legend>
+            {{ form.complaint_type }}           
+          </fieldset>
+          <fieldset>
+            <legend>Description</legend>
+            {{ form.complaint_text }}
+          </fieldset>
+          <p id="characterCount">0 / 1000</p>
+        
+          <button id="Save" type="submit">
+            <span>Submit Complaint</span>
+          </button>
+        </div>
+      </form>
+    </div>
+    
+  </main>
+  {% endblock body %}
+  {% block js %}
+  <script>
+    const textArea = document.getElementById('description');
+    const characterCount = document.getElementById('characterCount');
+
+    textArea.addEventListener('input', function() {
+        const currentLength = this.value.length;
+        const maxLength = 1000;
+        characterCount.textContent = `${currentLength} / ${maxLength}`;
+
+        if (currentLength > maxLength) {
+            this.value = this.value.substring(0, maxLength);
+            characterCount.textContent = `${maxLength} / ${maxLength}`;
+            characterCount.style.color = "red";
+        } else {
+            characterCount.style.color = "initial";
+        }
+    });
+</script>
+{% endblock js %}
+

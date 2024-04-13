@@ -1,0 +1,181 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+  <title>adherent</title>
+  <link rel="stylesheet" href="{% static 'css/notification.css' %}">
+{% endblock head %}
+{% block body %}
+  <section class="sidebar">
+    <div class="menu-btn">
+      <i class="fa-solid fa-angle-left"></i>
+    </div>
+    <div class="head">
+      <div class="user-img">
+        <img src="{% static 'images/logo.png' %}" alt="">
+      </div>
+    </div>
+    <div class="nav">
+      <div class="menu">
+        <p class="title">Main</p>
+        <ul>
+          <li>
+            <a href="{% url 'dashboard' %}">
+              <i class="fa-solid fa-chart-pie"></i>
+              <span class="text">Dashboard</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="fa-solid fa-users"></i>
+              <span class="text">Users</span>
+              <i id="arrow" class="fa-solid fa-chevron-down"></i>
+            </a>
+            <ul class="sub-menu">
+              <li>
+                <a href="{% url 'employees' %}">
+                  <span class="text">Employees</span>
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'adherent' %}">
+                  <span class="text">Adherents</span>
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'interns' %}">
+                  <span class="text">Interns</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="active">
+            <a href="{% url 'follownotification' %}">
+              <i class="fa-solid fa-bell"></i>
+              <span class="text">Notifications</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="fa-regular fa-clipboard"></i>
+              <span class="text">Complaint</span>
+              <i id="arrow" class="fa-solid fa-chevron-down"></i>
+            </a>
+            <ul class="sub-menu">
+              <li>
+                <a href="{% url 'employees' %}">
+                  <span class="text">Create Complaint</span>
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'adherent' %}">
+                  <span class="text">My Complaints</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="#">
+              <i class="fa-solid fa-calendar-days"></i>
+              <span class="text">Permission</span>
+              <i id="arrow" class="fa-solid fa-chevron-down"></i>
+            </a>
+            <ul class="sub-menu">
+              <li>
+                <a href="{% url 'employees' %}">
+                  <span class="text">Request a Leave</span>
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'adherent' %}">
+                  <span class="text">My Requests</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="menu">
+      <p class="title">account</p>
+      <ul>
+        <li>
+          <a href="{% url 'profile' %}">
+            <i class="fa-solid fa-circle-user"></i>
+            <span class="text">Profile</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'logout' %}" style="text-decoration: none;">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span class="text">logout</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+  <main>
+    <div class="tit">
+      <h3>Notifications ></h3>
+    </div>
+    <div class="bod">
+      {% if notifications %}
+        <div class="which">
+          <button id="button1">All</button>
+          <button id="button2" class="active">Unread</button>
+        </div>
+        {% for notification in notifications %}
+          {% if notification.notification_type == 'complaint' %}
+            <div class="notif">
+              <i class="fa-solid fa-calendar-week"></i> {{ notification.user.username }} requested a leave
+              <i class="fa-solid fa-arrow-right" style="position: absolute; right: 50px;"></i>
+            </div>
+          {% elif notification.notification_type == 'leave' %}
+            <div class="notif">
+              <i class="fa-solid fa-person-circle-question"></i> {{ notification.user.username }} added a complaint
+              <i class="fa-solid fa-arrow-right" style="position: absolute; right: 50px;"></i>
+            </div>
+          {% endif %}
+        {% endfor %}
+        <div class="notif">
+          <i class="fa-solid fa-calendar-plus"></i> an intern added to your depatment
+          <i class="fa-solid fa-arrow-right" style="position: absolute; right: 50px;"></i>
+        </div>
+      <div class="notif">
+        <i class="fa-solid fa-briefcase"></i> Team DEV added a new feature.
+        <i class="fa-solid fa-arrow-right" style="position: absolute; right: 50px;"></i>
+      </div>
+      
+      {% else %}
+        <div class="info">
+          <div class="info__icon">
+            <svg fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="m12 1.5c-5.79844 0-10.5 4.70156-10.5 10.5 0 5.7984 4.70156 10.5 10.5 10.5 5.7984 0 10.5-4.7016 10.5-10.5 0-5.79844-4.7016-10.5-10.5-10.5zm.75 15.5625c0 .1031-.0844.1875-.1875.1875h-1.125c-.1031 0-.1875-.0844-.1875-.1875v-6.375c0-.1031.0844-.1875.1875-.1875h1.125c.1031 0 .1875.0844.1875.1875zm-.75-8.0625c-.2944-.00601-.5747-.12718-.7808-.3375-.206-.21032-.3215-.49305-.3215-.7875s.1155-.57718.3215-.7875c.2061-.21032.4864-.33149.7808-.3375.2944.00601.5747.12718.7808.3375.206.21032.3215.49305.3215.7875s-.1155.57718-.3215.7875c-.2061.21032-.4864.33149-.7808.3375z"
+                fill="#393a37"></path>
+            </svg>
+          </div>
+          <div class="info__title">There is no new notifications</div>
+        </div>
+      {% endif %}
+    </div>
+    
+  </main>
+  {% endblock body %}
+
+  {% block js %}
+    <script>
+      const button1 = document.getElementById("button1");
+      const button2 = document.getElementById("button2");
+
+      button1.addEventListener("click", () => {
+        button1.classList.add("active");
+        button2.classList.remove("active");
+      });
+
+      button2.addEventListener("click", () => {
+        button2.classList.add("active");
+        button1.classList.remove("active");
+      });
+    </script>
+    <script src="{% static 'js/chatbot.js' %}" type="text/javascript"></script>
+  {% endblock js %}

@@ -1,0 +1,195 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+<title>profile</title>
+<link rel="stylesheet" href="{%static 'css/profile.css'%}">
+{% endblock head %}
+
+{% block body %}
+<section class="sidebar">
+  <div class="menu-btn">
+    <i class="fa-solid fa-angle-left"></i>
+  </div>
+  <div class="head">
+    <div class="user-img">
+      <img src="{% static 'images/logo.png' %}" alt="">
+    </div>
+  </div>
+  <div class="nav">
+    <div class="menu">
+      <p class="title">Main</p>
+      <ul>
+        <li>
+          <a href="{% url 'dashboard' %}">
+            <i class="fa-solid fa-chart-pie"></i>
+            <span class="text">Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <i class="fa-solid fa-users"></i>
+            <span class="text">Users</span>
+            <i id="arrow" class="fa-solid fa-chevron-down"></i>
+          </a>
+          <ul class="sub-menu">
+            <li>
+              <a href="{% url 'employees' %}">
+                <span class="text">Employees</span>
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'adherent' %}">
+                <span class="text">Adherents</span>
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'interns' %}">
+                <span class="text">Interns</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="{% url 'follownotification' %}">
+            <i class="fa-solid fa-bell"></i>
+            <span class="text">Notifications</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <i class="fa-regular fa-clipboard"></i>
+            <span class="text">Complaint</span>
+            <i id="arrow" class="fa-solid fa-chevron-down"></i>
+          </a>
+          <ul class="sub-menu">
+            <li>
+              <a href="{% url 'submitcomplaint' %}">
+                <span class="text">Create Complaint</span>
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'followcomplaint' %}">
+                <span class="text">My Complaints</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="#">
+            <i class="fa-solid fa-calendar-days"></i>
+            <span class="text">Permission</span>
+            <i id="arrow" class="fa-solid fa-chevron-down"></i>
+          </a>
+          <ul class="sub-menu">
+            <li>
+              <a href="{% url 'submitcounji' %}">
+                <span class="text">Request a Leave</span>
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'followcounji' %}">
+                <span class="text">My Requests</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="menu">
+    <p class="title">account</p>
+    <ul>
+      <li class="active">
+        <a href="{% url 'profile' %}">
+          <i class="fa-solid fa-circle-user"></i>
+          <span class="text">Profile</span>
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'logout' %}" style="text-decoration: none;">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span class="text">logout</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</section>
+  <main>
+    <div class="tit">
+      <h3>Profile > User</h3>
+    </div>
+      <div class="bod">
+        <h3>Your Profile Information</h3>
+        <form method="POST" enctype="multipart/form-data" style="width: 65%;">
+          {% csrf_token %}
+          <div class="profile">
+            <div class="esm">
+              <fieldset>
+                <legend>First Name</legend>
+                {{ u_form.first_name}}
+              </fieldset>
+              <fieldset>
+                <legend>Last Name</legend>
+                {{ u_form.last_name}}
+              </fieldset>
+            </div>
+            <fieldset>
+              <legend>Username</legend>
+              {{ u_form.username}}
+            </fieldset>
+            <fieldset>
+              <legend>Email</legend>
+              {{ u_form.email}}
+            </fieldset>
+            <fieldset>
+              <legend>Birth Date</legend>
+              {{ p_form.date_of_birth}}
+            </fieldset>
+            <fieldset>
+              <legend>ID</legend>
+              {{ p_form.cin}}
+            </fieldset>
+            <fieldset>
+              <legend>Phone Number</legend>
+              {{ p_form.phone_number}}
+            </fieldset>
+            <!-- <fieldset>
+              <legend>Adress</legend>
+              <input type="text">
+            </fieldset> -->
+            <fieldset>
+              <legend>State</legend>
+              {{ p_form.state}}
+            </fieldset>
+            <button id="Save">
+              <span>Save changes</span>
+            </button>
+          </div>
+        </form>
+        {% for message in messages %}
+        <div class="changement" id="message">
+          <div class="icon">
+            <i class="fa-solid fa-check"></i>
+          </div>
+          <p>{{message}}</p>
+        </div>
+        {% endfor %}
+      </div>
+    
+  </main>
+
+  
+  {% endblock body %}
+
+  {% block js %}
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var messageElement = document.getElementById('message');
+      if (messageElement) {
+        setTimeout(function() {
+          messageElement.style.display = 'none';
+        }, 3000); // 4000 milliseconds = 4 seconds
+      }
+    });
+    </script>
+  {% endblock js %}
